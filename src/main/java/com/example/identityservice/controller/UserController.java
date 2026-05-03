@@ -39,5 +39,10 @@ public class UserController {
         return userService.deleteById(id);
     }
 
+    @PostMapping("create-and-update")
+    public ApiResponse<UserResponse> createAndUpdate(@RequestBody UserRequest userRequest){
+        return userService.createAndUpdate(userRequest);
+    }
+
 
 }

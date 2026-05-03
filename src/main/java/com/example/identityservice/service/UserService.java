@@ -8,8 +8,13 @@ import com.example.identityservice.exception.AppException;
 import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.mapper.UserMapper;
 import com.example.identityservice.repository.UserRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +33,41 @@ public class UserService {
 
     @Autowired
     UserMapper userMapper;
+
+
+    public ApiResponse<UserResponse> createAndUpdate(UserRequest userRequest){
+        Users result = new Users();
+        if(userRequest.getId() != null){
+            Optional<Users> usersOptional = userRepository.findById(userRequest.getId());
+            if (usersOptional == null || usersOptional.isEmpty()) {
+                throw new RuntimeException("Cannot find user");
+            }
+            Users users = usersOptional.get();
+            users.setUserName(userRequest.getUserName());
+            users.setPassword(userRequest.getPassword());
+            users.setFirstName(userRequest.getFirstName());
+            users.setLastName(userRequest.getLastName());
+            result = users;
+            userRepository.save(users);
+        }else{
+            boolean checkUserName = userRepository.existsByuserName(userRequest.getUserName());
+            if (checkUserName) {
+                throw new AppException(ErrorCode.USER_EXISTED);
+            }
+            if(userRequest.getPassword().length() < 8){
+                throw new AppException(ErrorCode.INVALID_PASSWORD);
+            }
+            Users users = userMapper.toUser(userRequest);
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+            users.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+            result = users;
+            userRepository.save(users);
+        }
+        return new ApiResponse(200, "Ok", entityToResponse(result));
+    }
+
+
+
     public ApiResponse<UserResponse> create(UserRequest userRequest) {
 
         boolean checkUserName = userRepository.existsByuserName(userRequest.getUserName());
@@ -38,6 +78,8 @@ public class UserService {
             throw new AppException(ErrorCode.INVALID_PASSWORD);
         }
         Users users = userMapper.toUser(userRequest);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        users.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         userRepository.save(users);
         return new ApiResponse(200, "Ok", entityToResponse(users));
