@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticationResponse {
-    private String userName;
-    private String password;
-    private String firstName;
-    private String lastName;
+    private boolean authenticated;
+    private String jwt;
 }
