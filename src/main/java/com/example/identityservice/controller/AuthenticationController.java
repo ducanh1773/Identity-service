@@ -31,7 +31,9 @@ public class AuthenticationController {
     public ApiResponse<IntrospectResponse> introsp(@RequestBody IntrospectRequest introspectRequest) throws ParseException, JOSEException {
         var introspect = authenticationService.introspect(introspectRequest);
         ApiResponse apiResponse = new ApiResponse<>();
-        apiResponse.success(authenticationService.introspect(introspectRequest));
+
+        apiResponse.setResult(introspect);
+
         return apiResponse;
 
     }
