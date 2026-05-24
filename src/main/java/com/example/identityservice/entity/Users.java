@@ -1,27 +1,31 @@
 package com.example.identityservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer Id;
+    Integer Id;
     @Column(name = "user_name")
-    private String userName;
+    String userName;
     @Column(name = "password")
-    private String password;
+    String password;
     @Column(name = "first_name")
-    private String firstName;
+    String firstName;
     @Column(name = "last_name")
-    private String lastName;
-
+    String lastName;
+    @Column(name = "role")
+    Set<String> role;
 
 }
