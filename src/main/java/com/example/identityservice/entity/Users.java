@@ -1,5 +1,6 @@
 package com.example.identityservice.entity;
 
+import com.example.identityservice.entity.Roles;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,7 +26,10 @@ public class Users {
     String firstName;
     @Column(name = "last_name")
     String lastName;
+
+
     @Column(name = "role")
-    Set<String> role;
+    @ManyToMany
+    Set<Roles> role;
 
 }

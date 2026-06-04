@@ -66,7 +66,7 @@ public class UserService {
             users.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             HashSet<String> roles = new HashSet<>();
             roles.add(Roles.USER.name());
-            users.setRole(roles);
+//            users.setRole(roles);
             result = users;
             userRepository.save(users);
         }
@@ -159,7 +159,7 @@ public class UserService {
         userResponse.setUserName(users.getUserName());
         userResponse.setFirstName(users.getFirstName());
         userResponse.setLastName(users.getLastName());
-        userResponse.setRole(users.getRole());
+//        userResponse.setRole(users.getRole());
         return userResponse;
     }
 

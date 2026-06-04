@@ -30,7 +30,7 @@ public class ApplicationInitConfig {
                 Users users = new Users();
                 users.setUserName("admin");
                 users.setPassword(passwordEncoder.encode("admmin"));
-                users.setRole(role);
+//                users.setRole(role);
                 userRepository.save(users);
                 log.warn("admin user has been created with defaul password admin");
             }
