@@ -11,7 +11,9 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST , 1004, "Password must be at least 8 characters"),
     USER_NOT_EXISTED(HttpStatus.NOT_FOUND, 1005, "Wrong username or password"),
     PASSWORD_NOT_CORRECT(HttpStatus.UNAUTHORIZED , 1005, "Wrong username or password"),
-    UNAUTHORIZED(HttpStatus.FORBIDDEN , 1006, "You do not have permission");
+    UNAUTHORIZED(HttpStatus.FORBIDDEN , 1006, "You do not have permission")
+    ,UNAUTHENTICATED(HttpStatus.UNAUTHORIZED ,1007 , "Unauthoriized");
+
 
     private int code;
     private String message;
