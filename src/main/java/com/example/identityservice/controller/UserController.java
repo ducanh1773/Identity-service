@@ -42,17 +42,17 @@ public class UserController {
     }
 
     @PostMapping("/create-and-update")
-    public ApiResponse<UserResponse> createAndUpdate(@RequestBody UserRequest userRequest){
+    public ApiResponse<UserResponse> createAndUpdate(@RequestBody UserRequest userRequest) {
         return userService.createAndUpdate(userRequest);
     }
 
     @GetMapping
-    public ApiResponse<List<UserResponse>> getAll(){
+    public ApiResponse<List<UserResponse>> getAll() {
         return userService.getAll();
     }
 
     @GetMapping("/my-info")
-    public ApiResponse<UserResponse> getById(){
+    public ApiResponse<UserResponse> getById() {
         return userService.myInfo();
     }
 
